@@ -1,13 +1,7 @@
 `timescale 1ns / 1ns
 
 
-module ALU(
-    a,
-    b,
-	 func,
-    out,
-    zero_flag
-    );
+module ALU(a,b, func, out, zero_flag);
 
 
 	 parameter size = 32;
@@ -28,15 +22,17 @@ module ALU(
 	
 	always @(*) begin
 		if (func == 3'd0) 
-		out = a+b;
+		out = a + b;
 		else if (func == 3'd1)
-		out = a-b;
+		out = a - b;
 		else if (func == 3'd2)
-		out = a&b;
+		out = a & b;
 		else if (func == 3'd3)
-		out = a|b;
+		out = a | b;
 		else if (func == 3'd4)
-		out = ~(a|b);
+		out = ~(a | b);
+		else if (func == 3'd5)
+		out = a << b;
 		else
 		out = 0;
    end

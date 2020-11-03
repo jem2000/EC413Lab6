@@ -50,6 +50,15 @@ always @(*) begin
 	   ALUSrc = 1'b1;
 		MemWrite = 1'b0;
 		RegWrite = 1'b1;
+		end else if (instruction == 6'b00_1000) begin //addi NEED CHECK
+		ALUOp = 2'b10;
+		MemRead = 1'b0;
+		MemtoReg = 1'b1; //maybe
+		RegDst = 1'b0;
+      Branch = 1'b0;		
+	   ALUSrc = 1'b1;
+		MemWrite = 1'b0;
+		RegWrite = 1'b1;
 		end else begin
 		ALUOp = 2'b00;
 		MemRead = 1'b0;

@@ -25,7 +25,7 @@
 // 4 bit immediate
 
 module cpu(
-    rst,
+     rst,
 	 clk,
 	 initialize,
 	 instruction_initialize_data,
@@ -33,7 +33,7 @@ module cpu(
     );
 	 
 	 	 
-    input rst;
+     input rst;
 	 input clk;
 	 input initialize;
 	 input [31:0] instruction_initialize_data;
@@ -42,7 +42,7 @@ module cpu(
 	 wire [31:0] instruction;
 	 wire [31:0] instruction_mem_out;
 	 assign instruction = (initialize) ? 32'hFFFF_FFFF : instruction_mem_out;
-    InstrMem InstructionMemory (instruction_mem_out , instruction_initialize_data  , (initialize) ? instruction_initialize_address : PC_out , initialize , clk);
+     InstrMem InstructionMemory (instruction_mem_out , instruction_initialize_data  , (initialize) ? instruction_initialize_address : PC_out , initialize , clk);
 	
 	
 	
