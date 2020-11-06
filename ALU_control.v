@@ -22,7 +22,7 @@ module ALU_control(
 		func = 3'd5;
 		else
 		func = 3'd7;
-	end else if (ALUOp == 2'b01) begin //BRANCH
+	end else if (ALUOp == 2'b01) begin //BRANCH EQUAL
 		func = 3'd1;
 	end else if (ALUOp == 2'b10) begin //SW & LW
 		func = 3'd0;

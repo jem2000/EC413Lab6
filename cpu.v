@@ -54,36 +54,36 @@ module cpu(
 	 wire ALUSrc;
 	 wire MemWrite;
 	 wire RegWrite;
-    control Control(instruction [31:26], ALUOp, MemRead, MemtoReg, RegDst, Branch, ALUSrc, MemWrite, RegWrite); 
+	 wire Jump;
+     control Control(instruction [31:26], ALUOp, MemRead, MemtoReg, RegDst, Branch, ALUSrc, MemWrite, RegWrite, Jump); 
 	 
 	 
 	 
 	 wire           [31:0]            write_data;
-    wire           [4:0]             write_register;
-    wire		       [31:0]            read_data_1, read_data_2;
-	 wire				 [31:0]            ALUOut, MemOut;
+     wire           [4:0]             write_register;
+     wire		    [31:0]            read_data_1, read_data_2;
+	 wire			[31:0]            ALUOut, MemOut;
 	 mux #(5) Write_Reg_MUX (RegDst, instruction[20:16], instruction[15:11], write_register);
 	 nbit_register_file Register_File(write_data, read_data_1, read_data_2, instruction[25:21] , instruction[20:16], write_register, RegWrite, clk);
     
 	 
 	 
 	 wire [31:0] immediate;
-    sign_extend Sign_Extend( instruction[15:0], immediate);
-	 
-	 
+     sign_extend Sign_Extend( instruction[15:0], immediate);
 	 
 	 wire [31:0] ALU_input_2;
-    wire zero_flag;
+     wire zero_flag;
 	 wire [2:0] ALU_function;
 	 mux #(32) ALU_Input_2_Mux (ALUSrc, read_data_2, immediate, ALU_input_2);
+	 
 	 ALU_control ALU_Control(instruction[5:0], ALUOp, ALU_function);
-    ALU ALU(read_data_1, ALU_input_2, ALU_function, ALUOut, zero_flag);
+     ALU ALU(read_data_1, ALU_input_2, ALU_function, ALUOut, zero_flag);
 	 
 	 
 	 Memory Data_Memory(ALUOut, read_data_2, MemOut, MemRead, MemWrite, clk);
 
 
-    mux #(32) ALU_Mem_Select_MUX (MemtoReg, ALUOut, MemOut, write_data);	 
+     mux #(32) ALU_Mem_Select_MUX (MemtoReg, ALUOut, MemOut, write_data);	 
 	 
 	 
 	 wire [31:0] PC_in;
@@ -98,11 +98,19 @@ module cpu(
 	 shift_left_2 #(32) Shift_Left_Two (immediate, immediate_x_4);
 	 Adder #(32) Branch_Target_Adder (PC_plus_4, immediate_x_4, Branch_target_address);
 	 
+	 wire [31:0] mux_to_mux;
+	 wire [27:0] SL2_out; 
+	 
+	 shift_left_2 #(28) ShiftLeft2 (instruction[25:0], SL2_out);
+	 
+	 wire [31:0] JumpAddress;
+	 assign JumpAddress = {PC_plus_4[31:28], SL2_out};
+	 
 	 
 	 wire PCSrc;
 	 and Branch_And (PCSrc, Branch, zero_flag);
-	 mux #(32) PC_Input_MUX (PCSrc, PC_plus_4, Branch_target_address, PC_in);
+	 mux #(32) PC_Input_MUX (PCSrc, PC_plus_4, Branch_target_address, mux_to_mux);
 	 
-	 
+	 mux #(32) jump_mux (Jump, mux_to_mux, JumpAddress, PC_in);
 	 							 
 endmodule

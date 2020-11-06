@@ -40,14 +40,20 @@ module tb_cpu;
 		#20;
 		instruction_initialize_address = 12;
 		instruction_initialize_data = 32'b101011_00000_01001_00000_00000_00_1100;      // SW R9, 12(R0)
-		#20;
+		#20		
 		instruction_initialize_address = 16;
+		instruction_initialize_data = 32'b0000_1000_0000_0000_0000_0000_0000_0100;      // j 
+		#20;
+		instruction_initialize_address = 20;
 		instruction_initialize_data = 32'b100011_00000_01100_00000_00000_00_1100;      // LW R12, 12(R0)
 		#20	
-		instruction_initialize_address = 20;
+		instruction_initialize_address = 24;
 		instruction_initialize_data = 32'b0010_0000_0010_0010_0000_0000_0000_1000;      // addi $R2, $S1, 8
-		#20			
-        instruction_initialize_address = 24;
+		//#20		
+		//instruction_initialize_address = 28;
+		//instruction_initialize_data = 32'b0000_1011_1111_1111_1111_1111_1110_1000;      // j 
+		//#20		
+        instruction_initialize_address = 28;
 		instruction_initialize_data = 32'b000100_00000_00000_11111_11111_11_1111;      // BEQ R0, R0, -1
 		#20;
 		
