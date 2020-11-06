@@ -85,7 +85,7 @@ module cpu(
 	 
 	 shift_left_16 #(32) sl16(immediate,sl16_wire); 
 	 
-	 mux #(32) LUI_MUX(LUI,alu_wire,s116_wire,ALUOut); 
+	 mux #(32) LUI_MUX(LUI,alu_wire,sl16_wire,ALUOut); 
 	 
 	 Memory Data_Memory(ALUOut, read_data_2, MemOut, MemRead, MemWrite, clk);
 
@@ -110,7 +110,6 @@ module cpu(
 	 
 	 wire [31:0] JumpAddress;
 	 assign JumpAddress = {PC_plus_4[31:28], SL2_out};
-	 
 	 
 	 wire PCSrc; 
 	 wire Branch_Out; 
