@@ -21,17 +21,17 @@ module ALU(a,b, func, out, zero_flag);
 	end
 	
 	always @(*) begin
-		if (func == 3'd0) 
+		if (func == 3'd0) //ADD 0010 0000, or 20h
 		out = a + b;
-		else if (func == 3'd1)
+		else if (func == 3'd1) //SUB 0010 0010, or 22h
 		out = a - b;
-		else if (func == 3'd2)
+		else if (func == 3'd2) //AND 0010 0100, or 24h
 		out = a & b;
-		else if (func == 3'd3)
+		else if (func == 3'd3) //OR 0010 0101, or 25h
 		out = a | b;
-		else if (func == 3'd4)
+		else if (func == 3'd4) //NOR??
 		out = ~(a | b);
-		else if (func == 3'd5)
+		else if (func == 3'd5) //SLT 0010 1010, or 2Ah
 		out = a << b;
 		else
 		out = 0;
