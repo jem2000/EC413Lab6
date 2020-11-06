@@ -115,7 +115,7 @@ module cpu(
 	 wire Branch_Out; 
 	 wire BranchNEQ_Out; 
 	 and Branch_And (Branch_Out, Branch, zero_flag); 
-	 and BranchNEQ_And(BranchNEQ_Out,BranchNEQ,zero_flag); 
+	 and BranchNEQ_And(BranchNEQ_Out, BranchNEQ, ~zero_flag);
 	 or Branches(PCSrc,Branch_Out,BranchNEQ_Out); 
 	 mux #(32) PC_Input_MUX (PCSrc, PC_plus_4, Branch_target_address, mux_to_mux);
 	 

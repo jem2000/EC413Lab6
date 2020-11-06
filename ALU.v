@@ -31,8 +31,11 @@ module ALU(a,b, func, out, zero_flag);
 		out = a | b;
 		else if (func == 3'd4) //NOR??
 		out = ~(a | b);
-		else if (func == 3'd5) //SLT 0010 1010, or 2Ah
-		out = a << b;
+		else if (func == 3'd5) begin//SLT 0010 1010, or 2Ah
+		  if (a < b) 
+		      out = 32'h0000_0001;
+		  else out = 32'h0000_0000;
+		end
 		else
 		out = 0;
    end
