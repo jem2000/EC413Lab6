@@ -7,10 +7,12 @@ module control(
 		output reg MemtoReg,
 		output reg RegDst,
 		output reg Branch, 
+		output reg BranchNEQ, 
 		output reg ALUSrc,
 		output reg MemWrite,
 		output reg RegWrite,
-		output reg Jump
+		output reg Jump, 
+		output reg LUI  
 		);
 
 
@@ -20,7 +22,9 @@ always @(*) begin
 		MemRead = 1'b0;
 		MemtoReg = 1'b0;
 		RegDst = 1'b1;
-      Branch = 1'b0;		
+      Branch = 1'b0; 
+      BranchNEQ = 1'b0; 
+      LUI = 1'b0; 		
 	   ALUSrc = 1'b0;
 		MemWrite = 1'b0;
 		RegWrite = 1'b1;
@@ -30,7 +34,21 @@ always @(*) begin
 		MemRead = 1'b0;
 		MemtoReg = 1'b0;
 		RegDst = 1'b0;
-      Branch = 1'b1;		
+      Branch = 1'b1; 
+      BranchNEQ = 1'b0; 	
+      LUI = 1'b0; 		
+	   ALUSrc = 1'b0;
+		MemWrite = 1'b0;
+		RegWrite = 1'b0;
+		Jump = 1'b0;
+		end else if (instruction == 6'b00_0101) begin   //branch not equal
+		ALUOp = 2'b01; 
+		MemRead = 1'b0;
+		MemtoReg = 1'b0;
+		RegDst = 1'b0;
+      Branch = 1'b0; 
+      BranchNEQ = 1'b1; 	
+      LUI = 1'b0; 		
 	   ALUSrc = 1'b0;
 		MemWrite = 1'b0;
 		RegWrite = 1'b0;
@@ -40,7 +58,9 @@ always @(*) begin
 		MemRead = 1'b0;
 		MemtoReg = 1'b0;
 		RegDst = 1'b0;
-      Branch = 1'b0;		
+      Branch = 1'b0;	
+      BranchNEQ = 1'b0; 	
+      LUI = 1'b0; 	
 	   ALUSrc = 1'b1;
 		MemWrite = 1'b1;
 		RegWrite = 1'b0;
@@ -50,7 +70,21 @@ always @(*) begin
 		MemRead = 1'b1;
 		MemtoReg = 1'b1;
 		RegDst = 1'b0;
-      Branch = 1'b0;		
+      Branch = 1'b0;	
+      BranchNEQ = 1'b0; 	
+      LUI = 1'b0; 	
+	   ALUSrc = 1'b1;
+		MemWrite = 1'b0;
+		RegWrite = 1'b1;
+		Jump = 1'b0;
+		end else if (instruction == 6'b00_1111) begin   //LUI
+		ALUOp = 2'b10; //change 
+		MemRead = 1'b0;
+		MemtoReg = 1'b0;
+		RegDst = 1'b0;
+      Branch = 1'b0; 
+      BranchNEQ = 1'b0; 	
+      LUI = 1'b1; 		
 	   ALUSrc = 1'b1;
 		MemWrite = 1'b0;
 		RegWrite = 1'b1;
@@ -60,7 +94,9 @@ always @(*) begin
 		MemRead = 1'b0;
 		MemtoReg = 1'b0;
 		RegDst = 1'b0;
-      Branch = 1'b0;		
+      Branch = 1'b0;	
+      BranchNEQ = 1'b0; 	
+      LUI = 1'b0; 	
 	   ALUSrc = 1'b1;
 		MemWrite = 1'b0;
 		RegWrite = 1'b1;
@@ -70,7 +106,9 @@ always @(*) begin
 		MemRead = 1'b0;
 		MemtoReg = 1'b0;
 		RegDst = 1'b0;
-      Branch = 1'b0;		
+      Branch = 1'b0;	
+      BranchNEQ = 1'b0; 	
+      LUI = 1'b0; 	
 	   ALUSrc = 1'b0;
 		MemWrite = 1'b0;
 		RegWrite = 1'b0;
@@ -80,12 +118,13 @@ always @(*) begin
 		MemRead = 1'b0;
 		MemtoReg = 1'b0;
 		RegDst = 1'b0;
-      Branch = 1'b0;		
+		Jump = 1'b0;
+      Branch = 1'b0;	
+      BranchNEQ = 1'b0; 
+      LUI = 1'b0; 		
 	   ALUSrc = 1'b0;
 		MemWrite = 1'b0;
 		RegWrite = 1'b0;
-		end
-	
-	
+		end 
 end
 endmodule
